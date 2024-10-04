@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Editar Produto</title>
+	<style>
+		/* Estilos Globais */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Arial', sans-serif;
+			background-color: #1d1d1d;
+			/* Fundo escuro */
+			color: #fff;
+			/* Texto claro */
+			margin: 0;
+		}
+
+		/* Estilo da navegação */
+		.navbar {
+			background-color: #333;
+			/* Cor do fundo da navbar */
+			padding: 10px 20px;
+		}
+
+		.navbar ul {
+			list-style: none;
+			display: flex;
+			justify-content: center;
+		}
+
+		.navbar ul li {
+			margin: 0 15px;
+		}
+
+		.navbar ul li a {
+			color: #fff;
+			text-decoration: none;
+			font-size: 16px;
+			transition: color 0.3s ease;
+		}
+
+		.navbar ul li a:hover {
+			color: #00bfff;
+			/* Efeito hover azul */
+		}
+
+		.navbar ul li a.active {
+			color: #00bfff;
+			/* Cor do link ativo */
+		}
+
+		/* Estilos para o container de edição de produto */
+		.editar-produto-container {
+			background-color: #1a1a1a;
+			/* Fundo cinza escuro */
+			padding: 40px;
+			border-radius: 8px;
+			box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+			text-align: center;
+			width: 400px;
+			margin: 100px auto;
+			/* Centraliza horizontalmente e cria espaço para a navbar */
+		}
+
+		/* Título */
+		h1 {
+			color: #00aaff;
+			/* Azul claro */
+			margin-bottom: 30px;
+			font-size: 24px;
+		}
+
+		/* Formulário de Edição */
+		.editar-produto-form input[type="text"],
+		.editar-produto-form input[type="number"] {
+			width: 100%;
+			padding: 12px;
+			margin-bottom: 20px;
+			background-color: #2a2a2a;
+			/* Fundo de input cinza escuro */
+			border: none;
+			border-radius: 5px;
+			color: #ffffff;
+			/* Texto branco */
+			font-size: 16px;
+		}
+
+		.editar-produto-form input::placeholder {
+			color: #999999;
+			/* Placeholder em cinza claro */
+		}
+
+		/* Select do tipo de produto */
+		select {
+			width: 100%;
+			padding: 12px;
+			margin-bottom: 20px;
+			background-color: #2a2a2a;
+			border: none;
+			border-radius: 5px;
+			color: #fff;
+			font-size: 16px;
+		}
+
+		/* Botão de Salvar */
+		button {
+			width: 100%;
+			padding: 12px;
+			background-color: #00aaff;
+			/* Azul claro */
+			border: none;
+			border-radius: 5px;
+			color: white;
+			font-size: 18px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #0088cc;
+			/* Azul mais escuro */
+		}
+
+		/* Responsividade */
+		@media (max-width: 768px) {
+			.editar-produto-container {
+				width: 90%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<nav class="navbar">
+		<ul>
+			<li><a th:href="@{/index}">dashboard</a></li>
+			<li><a th:href="@{/list/all/product}">Produtos</a></li>
+			<li><a th:href="@{/list/moviments/product}">Relatórios</a></li>
+			<li><a th:href="@{/pre/register/moviment/products}">Movimentação de Estoque</a></li>
+			<li><a th:href="@{/pre/register/product}">Cadastro de Produto</a></li>
+			<li><a th:href="@{/loginRequest}">Login</a></li>
+		</ul>
+	</nav>
+
+	<div class="editar-produto-container">
+		<h1>Editar Produto</h1>
+		<form class="editar-produto-form" th:action="@{/edit/product}" method="post" th:object="${products}">
+			
+			<input type="hidden" th:field="*{id}">
+			
+			<input type="text" th:field="*{name}" placeholder="Nome do Produto" required>
+			
+			<input type="number" th:field="*{amount}" placeholder="Quantidade" required>
+			
+			<input type="number" th:field="*{price}"  placeholder="Preço" required>
+
+			<select   th:field="*{category}" required >
+				<option value="">Tipo do Produto</option>
+				<option th:each=" c : ${category}" th:value="${c}" th:text="${c}" required>Produto A</option>
+				
+			</select>
+
+			<button type="submit">Salvar Alterações</button>
+		</form>
+	</div>
+</body>
+
+</html>
